@@ -15,14 +15,11 @@ usage: qspaceweight.py [-h]
                        [bvalues ...]
 
 positional arguments:
-  unitary_schema  Sample.txt generate from http://www.emmanuelcaruyer.com/q
-                  -space-sampling.php
-  siemens_schema  Output file name (*.dvs for avoiding errors in the scanner)
-                  to store the weighted directions for Siemens scanner.
+  unitary_schema  Sample.txt generate from http://www.emmanuelcaruyer.com/q-space-sampling.php
+  siemens_schema  Output file name (*.dvs for avoiding errors in the scanner) to store the weighted directions for Siemens scanner.
   debug_file      File name to store debug information.
   n_b0            Number of B0 in the begining of the acquisition.
-  bvalues         B-Values vector separated by spaces (i.e: 1000 2000 3000).
-                  Number must match the shells in [unitary_schema]
+  bvalues         B-Values vector separated by spaces (i.e: 1000 2000 3000). Number must match the shells in [unitary_schema]
 
 optional arguments:
   -h, --help      show this help message and exit
