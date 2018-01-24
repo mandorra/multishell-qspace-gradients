@@ -2,6 +2,18 @@
 
 Generate a ready-to-import gradient table for a multi-shell DWI acquisition using Emmanuel Caruyer et al., 2013 uniform schemes in a Siemens scanner.
 
+##Disclaimer
+####################################################################################
+# THERE IS NO WARRANTY FOR THIS SAMPLING SCHEME, TO THE EXTENT PERMITTED BY        #
+# APPLICABLE LAW. EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS    #
+# AND/OR OTHER PARTIES PROVIDE THE SAMPLING SCHEME “AS IS” WITHOUT WARRANTY OF     #
+# ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE        #
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE  #
+# ENTIRE RISK AS TO THE QUALITY OF THE SAMPLING SCHEME IS WITH YOU. SHOULD THE     #
+# SAMPLING SCHEME PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING, #
+# REPAIR OR CORRECTION.                                                            #
+####################################################################################
+
 ##Usage
 
 First step to use this script is go to Emmanuel Caruyer wesite and create the desired sampling "Samples.txt" file. (http://www.emmanuelcaruyer.com/q-space-sampling.php)
