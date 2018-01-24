@@ -24,9 +24,8 @@ positional arguments:
 optional arguments:
   -h, --help      show this help message and exit
 
-Example of usage is as follows:
-
-python qspaceweight.py samples.txt siemens.dvs debug.txt 5 1000 2000 3000
+**Example of usage is as follows:**
+**python qspaceweight.py samples.txt siemens.dvs debug.txt 5 1000 2000 3000**
 
 
 ##Comments:
