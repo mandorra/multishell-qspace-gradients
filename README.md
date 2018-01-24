@@ -31,3 +31,9 @@ optional arguments:
 ##Comments:
 
 Please note that the provided b-values must match the shells you included in Caruyer's website otherwise script will throw you an error.
+
+##Cite:
+
+I kindly ask to cite E. Caruyer's work if you use his sampling:
+
+Emmanuel Caruyer, Christophe Lenglet, Guillermo Sapiro, Rachid Deriche. Design of multishell sampling schemes with uniform coverage in diffusion MRI. Magnetic Resonance in Medicine, Wiley, 2013, 69 (6), pp. 1534-1540. <http://dx.doi.org/10.1002/mrm.24736>
