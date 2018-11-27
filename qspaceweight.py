@@ -25,18 +25,21 @@ schema = []
 output = []
 
 with open(args.unitary_schema) as csvfile:
-     reader = csv.reader(csvfile, delimiter='\t', quotechar='|')
-     start = False
-     for row in reader:
-         
-        if start: 
-            u = np.array(row,dtype=np.float)
-            schema.append(u)
+    reader = csv.reader(csvfile, delimiter='\t', quotechar='|')
+    start = False
+    for row in reader:
+        try:
+            if start:
+                u = np.array(row, dtype=np.float)
+                schema.append(u)
 
-        if row[0] == "#shell": start = True
+            if row[0] == "#shell":
+                start = True
+        except:
+            del schema[-1]
+            print("Skipping empty row..")
 
-#Check number of shells in input schema:
-
+# Check number of shells in input schema:
 input_nshells = int(max([item[0] for item in schema]))
 given_bvalues = bvalues.size
 
