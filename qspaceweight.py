@@ -47,7 +47,7 @@ if input_nshells == given_bvalues:
 
     maxb = max(bvalues)
 
-    with open(args.debug_file, 'wd') as fd:
+    with open(args.debug_file, 'w') as fd:
 
         fd.write("Maximum B-Value (MRI scaner should acquire all the time with this value): %d s/mm^2\n"%maxb)
         fd.write("B-values: %s s/mm^2\n\n\n"%str(bvalues))
@@ -74,7 +74,7 @@ if input_nshells == given_bvalues:
             
 
     #Create Siemens file
-    with open(args.siemens_schema, 'wb') as fd:
+    with open(args.siemens_schema, 'w') as fd:
 
         fd.write("[directions=%d]\n"%(dirs+ n_b0 + 1))
         fd.write("CoordinateSystem = xyz\n")
@@ -92,8 +92,9 @@ if input_nshells == given_bvalues:
             n = n + 1
 
 else:
-
-    print "ERROR: Given B-values number and provided Sample.txt shells number doesn't match. STOPPING."
+    print(input_nshells)
+    print(given_bvalues)
+    print("ERROR: Given B-values number and provided Sample.txt shells number doesn't match. STOPPING.")
 
 
 
