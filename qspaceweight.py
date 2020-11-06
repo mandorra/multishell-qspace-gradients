@@ -34,11 +34,10 @@ def intersperse_b0(input_dirs, n_b0):
     oi = 0     # counter for out_dirs
     ii = 0     # counter for input_dirs
     for block in range(n_blocks):
-        for k in range(vec_per_block):
-            # copy current one/direction:
-            out_dirs[oi] = input_dirs[ii]
-            oi += 1
-            ii += 1
+        # copy the next block from the input:
+        out_dirs[oi:oi+vec_per_block] = input_dirs[ii:ii+vec_per_block]
+        oi += vec_per_block
+        ii += vec_per_block
         # introduce a b-value = 0:
         out_dirs[oi] = '( 0.000, 0.000, 0.000 )'
         oi += 1
