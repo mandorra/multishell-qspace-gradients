@@ -3,6 +3,56 @@ import csv
 import argparse
 import numpy as np
 
+
+def intersperse_b0(input_dirs, n_b0):
+    """
+    Function to intersperse a given number of b-value=0 volumes in
+    between the original directions.
+    It assumes the scanner will collect a first b-value=0 volume at
+    the beginning of the acquisition.
+    Parameters
+    ----------
+    input_dirs : list
+    n_b0 : int
+        Number of b-value=0 volumes
+
+    Returns
+    -------
+    out_dirs : list
+
+    """
+    # To intersperse n_b0 b=0 volumes more or less equidistant in between the N
+    # DW images we should divide the N volumes in (n_b0+1) blocks, with each of
+    # the n_b0 first blocks having a b=0 volumes at the end, and the last block
+    # not having any.
+
+    N = len(input_dirs)               # number of original directions
+    n_blocks = N//n_b0 + 1            # number of blocks (equivalent of "ceil")
+    vec_per_block = N//int(n_blocks)  # number of points (directions) per block (equiv. of "floor")
+
+    out_dirs = [None] * (N + n_b0)
+    oi = 0     # counter for out_dirs
+    ii = 0     # counter for input_dirs
+    for block in range(n_blocks):
+        # copy the next block from the input:
+        out_dirs[oi:oi+vec_per_block] = input_dirs[ii:ii+vec_per_block]
+        oi += vec_per_block
+        ii += vec_per_block
+        # introduce a b-value = 0:
+        out_dirs[oi] = '( 0.000, 0.000, 0.000 )'
+        oi += 1
+
+    # last block (it might not have 'vec_per_block' points, but just a few left):
+    vecLeft = N + n_b0 - oi   # how many points/vectors/directions we have left
+    for k in range(vecLeft):
+        out_dirs[oi] = input_dirs[ii]
+        oi+=1
+        ii+=1
+
+    return out_dirs
+
+
+
 parser = argparse.ArgumentParser()
 
 parser.add_argument('unitary_schema', type=str,
@@ -13,6 +63,8 @@ parser.add_argument('debug_file', type=str,
     help='File name to store debug information.')
 parser.add_argument('n_b0',type=int,
     help='Number of B0 in the begining of the acquisition.')
+parser.add_argument('interspersed', type=bool,
+                    help='Should the B0 volumes be interspersed? If false, they will stay at the beginning.')
 parser.add_argument('bvalues', nargs='+', 
     help='B-Values vector separated by spaces (i.e: 1000 2000 3000). Number must match the shells in [unitary_schema]')
 
@@ -79,17 +131,26 @@ if input_nshells == given_bvalues:
         fd.write("[directions=%d]\n"%(dirs+ n_b0 + 1))
         fd.write("CoordinateSystem = xyz\n")
         fd.write("Normalisation = none\n")
-        n = 0
 
-        for b0 in range(n_b0): 
+        if args.interspersed:
+            output = intersperse_b0(output, n_b0)
+            for n, dir in enumerate(output):
+                fd.write("Vector[%d] =" % n + dir + "\n")
+                n = n + 1
 
-            fd.write("Vector[%d] = ( 0.000, 0.000, 0.000 )\n"%n)
-            n = n + 1
+        else:
 
-        for dir in output:
+            n = 0
 
-            fd.write("Vector[%d] ="%n + dir + "\n")
-            n = n + 1
+            for b0 in range(n_b0):
+
+                fd.write("Vector[%d] = ( 0.000, 0.000, 0.000 )\n"%n)
+                n = n + 1
+
+            for dir in output:
+
+                fd.write("Vector[%d] =" % n + dir + "\n")
+                n = n + 1
 
 else:
     print(input_nshells)
