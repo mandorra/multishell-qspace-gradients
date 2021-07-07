@@ -35,7 +35,7 @@ optional arguments:
 ```
 **Example of usage:**
 ```shell
-python qspaceweight.py samples.txt siemens.dvs debug.txt True 5 1000 2000 3000
+python qspaceweight.py samples.txt siemens.dvs debug.txt 5 True 1000 2000 3000
 ```
 
 ## Comments:
