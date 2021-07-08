@@ -63,12 +63,15 @@ parser.add_argument('debug_file', type=str,
     help='File name to store debug information.')
 parser.add_argument('n_b0',type=int,
     help='Number of B0 in the begining of the acquisition.')
-parser.add_argument('interspersed', type=bool,
+parser.add_argument('interspersed', type=str,
                     help='Should the B0 volumes be interspersed? If false, they will stay at the beginning.')
 parser.add_argument('bvalues', nargs='+', 
     help='B-Values vector separated by spaces (i.e: 1000 2000 3000). Number must match the shells in [unitary_schema]')
 
 args = parser.parse_args()
+
+args.interspersed = eval(args.interspersed)
+
 
 bvalues=np.array(args.bvalues,dtype=np.int)
 n_b0 = int(args.n_b0)
