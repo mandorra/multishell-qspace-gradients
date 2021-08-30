@@ -27,13 +27,12 @@ def intersperse_b0(input_dirs, n_b0):
     # not having any.
 
     N = len(input_dirs)               # number of original directions
-    n_blocks = N//n_b0 + 1            # number of blocks (equivalent of "ceil")
-    vec_per_block = N//int(n_blocks)  # number of points (directions) per block (equiv. of "floor")
+    vec_per_block = N//int(n_b0)  # number of points (directions) per block (equiv. of "floor")
 
     out_dirs = [None] * (N + n_b0)
     oi = 0     # counter for out_dirs
     ii = 0     # counter for input_dirs
-    for block in range(n_blocks):
+    for block in range(n_b0):
         # copy the next block from the input:
         out_dirs[oi:oi+vec_per_block] = input_dirs[ii:ii+vec_per_block]
         oi += vec_per_block
@@ -63,9 +62,9 @@ parser.add_argument('debug_file', type=str,
     help='File name to store debug information.')
 parser.add_argument('n_b0',type=int,
     help='Number of B0 in the begining of the acquisition.')
-parser.add_argument('interspersed', type=bool,
-                    help='Should the B0 volumes be interspersed? If false, they will stay at the beginning.')
-parser.add_argument('bvalues', nargs='+', 
+parser.add_argument('interspersed', type=int,
+    help='Should the B0 volumes be interspersed? If 0, they will stay at the beginning.')
+parser.add_argument('bvalues', nargs='+',
     help='B-Values vector separated by spaces (i.e: 1000 2000 3000). Number must match the shells in [unitary_schema]')
 
 args = parser.parse_args()
@@ -109,7 +108,7 @@ if input_nshells == given_bvalues:
             bvalue = bvalues[int(dir[0]-1)]
             weight = np.sqrt(float(bvalue)/float(maxb))
             u = dir[1:4]
-            v = u*weight 
+            v = u*weight
             output.append("( %f, %f, %f )"%(v[0],v[1],v[2]))
             dirs = int(n)
 
@@ -123,7 +122,7 @@ if input_nshells == given_bvalues:
             fd.write("Weighted direction vector norm: %f\n"%np.linalg.norm(v))
             fd.write("True B-value (proportional to G^2): %f\n"%(float(maxb)*np.square(np.linalg.norm(v))))
             fd.write("\n\n")
-            
+
 
     #Create Siemens file
     with open(args.siemens_schema, 'w') as fd:
@@ -132,7 +131,7 @@ if input_nshells == given_bvalues:
         fd.write("CoordinateSystem = xyz\n")
         fd.write("Normalisation = none\n")
 
-        if args.interspersed:
+        if int(args.interspersed):
             output = intersperse_b0(output, n_b0)
             for n, dir in enumerate(output):
                 fd.write("Vector[%d] =" % n + dir + "\n")
@@ -156,9 +155,3 @@ else:
     print(input_nshells)
     print(given_bvalues)
     print("ERROR: Given B-values number and provided Sample.txt shells number doesn't match. STOPPING.")
-
-
-
-
-
-
