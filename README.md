@@ -11,7 +11,7 @@ First step to use this script is go to Emmanuel Caruyer wesite and create the de
 
 Second, clone this repository or "download as zip". In Linux you can give the script execution right with: "chmod a+x qspaceweight.py". Alternatively you can run the script in this way: "python qspaceweight.py"
 
-Thir, run the script with -h to see the help. 
+Thir, run the script with -h to see the help.
 
 ```
 usage: qspaceweight.py [-h]
@@ -35,7 +35,7 @@ optional arguments:
 ```
 **Example of usage:**
 ```shell
-python qspaceweight.py samples.txt siemens.dvs debug.txt True 5 1000 2000 3000
+python qspaceweight.py samples.txt siemens.dvs debug.txt 5 1 1000 2000 3000
 ```
 
 ## Comments:
